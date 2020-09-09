@@ -146,7 +146,7 @@ input[type="radio"].toggle:checked + label:after {
     <div class="upform">
 
 
-        <form>
+        <form method = "POST" action = "/secret-admirer/submit">
       
           <div class="upform-header"></div>
       
@@ -163,35 +163,35 @@ input[type="radio"].toggle:checked + label:after {
             <div class="input-block">
               <div class="label">Email address</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off">
+                <input type="text" class="required" autocomplete="off" name = "email">
               </div>
             </div>
 
             <div class="input-block">
               <div class="label">What is your name?</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off">
+                <input type="text" class="required" autocomplete="off" name = "name">
               </div>
             </div>
 
             <div class="input-block">
               <div class="label">Who is your secret admirer in our Intern team?</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off">
+                <input type="text" class="required" autocomplete="off" name = "secret_admirer">
               </div>
             </div>
 
             <div class="input-block">
               <div class="label">Tell us why</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off">
+                <input type="text" class="required" autocomplete="off" name = "reason">
               </div>
             </div>
 
             <div class="input-block">
               <div class="label">Give them a hint about you so they can guess a bit (but not obvious)</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off">
+                <input type="text" class="required" autocomplete="off" name = "hint">
               </div>
             </div>
       
