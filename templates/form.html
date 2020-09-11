@@ -146,15 +146,14 @@ input[type="radio"].toggle:checked + label:after {
     <div class="upform">
 
 
-        <form method = "POST" action = "/secret-admirer/submit">
+        <form method = "POST" action = "/secret-admirer/{{form['form_id']}}/submit">
       
-          <div class="upform-header"></div>
+          <div class="upform-header"><h1>{{form['form_name']}} 🕵</h1><br><strong style="color:red;">{{error_msg}}</strong></div>
       
           <div class="upform-main">
       
             
             <div class="input-block">
-              <h1><div class="label">SECRET ADMIRER 🕵</div></h1>
               <div class="label">Enter your details about your secret admirer.<br>
                 HINT them that it might be you who said it but don't make it too obvious.<br>
                 (your identity will be anonymous) </div>
@@ -163,35 +162,35 @@ input[type="radio"].toggle:checked + label:after {
             <div class="input-block">
               <div class="label">Email address</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "email">
+                <input type="text" class="required" autocomplete="off" name = "email" value = "{{form_data['email']}}">
               </div>
             </div>
 
             <div class="input-block">
               <div class="label">What is your name?</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "name">
+                <input type="text" class="required" autocomplete="off" name = "name" value = "{{form_data['name']}}">
               </div>
             </div>
 
             <div class="input-block">
               <div class="label">Who is your secret admirer in our Intern team?</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "secret_admirer">
+                <input type="text" class="required" autocomplete="off" name = "secret_admirer" value = "{{form_data['secret_admirer']}}">
               </div>
             </div>
 
             <div class="input-block">
               <div class="label">Tell us why</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "reason">
+                <input type="text" class="required" autocomplete="off" name = "reason" value = "{{form_data['reason']}}">
               </div>
             </div>
 
             <div class="input-block">
               <div class="label">Give them a hint about you so they can guess a bit (but not obvious)</div>
               <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "hint">
+                <input type="text" class="required" autocomplete="off" name = "hint" value = "{{form_data['hint']}}">
               </div>
             </div>
       

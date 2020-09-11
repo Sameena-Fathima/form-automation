@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Intern Of The Week</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
     <style>
         /* PAGE & INPUT STYLING */
 body {
@@ -138,150 +137,25 @@ input[type="radio"].toggle:checked + label:after {
   font-weight: bold;
   padding: 5px 20px;
 }
-
-
 /* UPFORM STYLE ENDS*/
 
-</style>
-
-<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
-<style>
-@import url(http://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
-
-
-div.stars {
-  width: 100%;
-  display: inline-block;
-}
-
-input.star { display: none; }
-
-label.star {
-  float: right;
-  padding: 10px;
-  font-size: 36px;
-  color: #444;
-  transition: all .2s;
-}
-
-input.star:checked ~ label.star:before {
-  content: '\f005';
-  color: #FD4;
-  transition: all .25s;
-}
-
-input.star-10:checked ~ label.star:before {
-  color: #FE7;
-  text-shadow: 0 0 20px #952;
-}
-
-input.star-4:checked ~ label.star:before { color: #F62; }
-input.star-3:checked ~ label.star:before { color: #F62; }
-input.star-2:checked ~ label.star:before { color: #F62; }
-input.star-1:checked ~ label.star:before { color: #F62; }
-
-label.star:hover { transform: rotate(-15deg) scale(1.3); }
-
-label.star:before {
-  content: '\f006';
-  font-family: FontAwesome;
-}
-
-@media only screen and (max-width: 600px) {
-  label.star {
-    padding: 4px;
-    font-size: 18px;
-    }
-}
-</style>
-<link href="http://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
-
+    </style>
 </head>
 <body>
-    
+
     <div class="upform">
 
 
-        <form method="POST" action="/intern-of-the-week/{{form['form_id']}}/submit">
+        <form>
       
-          <div class="upform-header"><h1>{{form['form_name']}} 🏆</h1><br><strong style="color:red;">{{error_msg}}</strong></div>
+          <div class="upform-header"><h1>INTERN OF THE WEEK 🏆</h1></div>
       
           <div class="upform-main">
       
             
             <div class="input-block">
-              <div class="label">Nominate your fellow Intern for the Intern of the Week.<br>
-                We will surprise them with a TACT gift card (which is worth 10$CAD).<br>
-                Note: Please don't nominate yourself (don't be greedy) </div>
+              <div class="label">Thanks for filling the form.</div>
             </div>
-      
-            <div class="input-block">
-              <div class="label">Email address</div>
-              <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "email" value="{{form_data['email']}}">
-              </div>
-            </div>
-
-            <div class="input-block">
-              <div class="label">Your Name</div>
-              <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "name" value="{{form_data['name']}}">
-              </div>
-            </div>
-
-            <div class="input-block">
-              <div class="label">Who would you nominate as Intern of the Week?</div>
-              <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "intern_of_the_week" value="{{form_data['intern_of_the_week']}}">
-              </div>
-            </div>
-
-            <div class="input-block">
-              <div class="label">Why would you nominate them?</div>
-              <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "reason" value="{{form_data['reason']}}">
-              </div>
-            </div>
-
-            <div class="input-block float-left">
-              <div class="label">Rate them (1-10)</div>
-              <div class="stars">
-                  <input class="star star-10" id="star-10" type="radio" name="star" value="10"/>
-                  <label class="star star-10" for="star-10"></label>
-                  <input class="star star-9" id="star-9" type="radio" name="star" value="9"/>
-                  <label class="star star-9" for="star-9"></label>
-                  <input class="star star-8" id="star-8" type="radio" name="star" value="8"/>
-                  <label class="star star-8" for="star-8"></label>
-                  <input class="star star-7" id="star-7" type="radio" name="star" value="7"/>
-                  <label class="star star-7" for="star-7"></label>
-                  <input class="star star-6" id="star-6" type="radio" name="star" value="6"/>
-                  <label class="star star-6" for="star-6"></label>
-                  <input class="star star-5" id="star-5" type="radio" name="star" value="5"/>
-                  <label class="star star-5" for="star-5"></label>
-                  <input class="star star-4" id="star-4" type="radio" name="star" value="4"/>
-                  <label class="star star-4" for="star-4"></label>
-                  <input class="star star-3" id="star-3" type="radio" name="star" value="3"/>
-                  <label class="star star-3" for="star-3"></label>
-                  <input class="star star-2" id="star-2" type="radio" name="star" value="2"/>
-                  <label class="star star-2" for="star-2"></label>
-                  <input class="star star-1" id="star-1" type="radio" name="star" value="1"/>
-                  <label class="star star-1" for="star-1"></label>
-              </div>
-            </div><br>
-            <div class="clearfix"></div>
-
-            <div class="input-block">
-              <div class="label">Comments and/or questions</div>
-              <div class="input-control">
-                <input type="text" class="required" autocomplete="off" name = "questions">
-              </div>
-            </div>
-      
-          </div>
-      
-          <div class="upform-footer">
-            <button type="submit" class="btn btn-primary btn-lg">Submit</button>
-          </div>
       
         </form>
       
@@ -298,6 +172,7 @@ label.star:before {
   $(document).ready(function() {
     $(container).find(".input-block").first().click();
   });
+
 
 
   $(container)
@@ -369,7 +244,7 @@ $.fn.upform = function() {
     $(container).find(".input-block").first().click();
   });
 
-
+  
   $(container)
     .find(".input-block")
     .not(".input-block input")
