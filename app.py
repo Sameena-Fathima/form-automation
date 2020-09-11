@@ -5,6 +5,7 @@ import random
 import string
 import datetime
 from bson.objectid import ObjectId
+import os
 
 
 class HTML2PDF(FPDF, HTMLMixin):
@@ -123,28 +124,53 @@ def intern_of_the_week_insert_data(form_id):
 def download_pdf():
     return render_template('download.html',value = "secret_admirer.pdf")
 
-pdf = HTML2PDF()
-@app.route('/return-file/<filename>')
-def return_files_tut(filename):
-    rows = secret_admirer.find()
+
+@app.route('/secret-admirer/return-file/<form_id>')
+def return_file(form_id):
+    pdf = HTML2PDF()
+    rows = secret_admirer.find({'form_id':form_id})
     results = []
     for row in rows:
         Secret_Admirer = row['secret_admirer']
         Reason = row['reason']
         Hint = row['hint']
         print("printing",Secret_Admirer,Reason,Hint)
-        html = '''<h1>WHO is your secret admirer?</h1>
+        html = '''<h1>Who is your secret admirer in our Intern team?</h1>
             <p>'''+Secret_Admirer+'''</p>
-            <h1>Why?</h1>
+            <h1>Tell us why?</h1>
             <p>'''+Reason+'''</p>
-            <h1>Hint</h1>
+            <h1>Give them a hint about you so they can guess a bit</h1>
             <p>'''+Hint+'''</p>'''
         print(html)
         pdf.add_page()
         pdf.write_html(html)
     pdf.output('img/secret_admirer.pdf')
     file_path = "img/secret_admirer.pdf"
-    return send_file(file_path, as_attachment=True, attachment_filename='')
+    return send_file(file_path, attachment_filename='secret-admirer.pdf', as_attachment=True, cache_timeout=0)
+
+@app.route('/intern-of-the-week/return-file/<form_id>')
+def return_file_2(form_id):
+    pdf = HTML2PDF()
+    rows = intern_of_the_week.find({'form_id':form_id})
+    results = []
+    html = ''''''
+    for row in rows:
+        Intern_of_the_week = row['intern_of_the_week']
+        Reason = row['reason']
+        star = row['star']
+        print("printing",Intern_of_the_week,Reason,star)
+        html += '''<h1>Who would you nominate as Intern of the Week?</h1>
+            <p>'''+Intern_of_the_week+'''</p>
+            <h1>Why would you nominate them?</h1>
+            <p>'''+Reason+'''</p>
+            <h1>Rate them (1-10)</h1>
+            <p>'''+star+'''</p><br><br><hr>'''
+    print(html)
+    pdf.add_page()
+    pdf.write_html(html)
+    pdf.output('img/intern_of_the_week.pdf')
+    file_path = "img/intern_of_the_week.pdf"
+    return send_file(file_path, attachment_filename='intern-of-the-week.pdf', as_attachment=True, cache_timeout=0)
 
 @app.route('/')
 def index():
