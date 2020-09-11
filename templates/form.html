@@ -142,18 +142,19 @@ input[type="radio"].toggle:checked + label:after {
     </style>
 </head>
 <body>
-    
+
     <div class="upform">
 
 
         <form method = "POST" action = "/secret-admirer/submit">
       
-          <div class="upform-header"><h1>SECRET ADMIRER 🕵</h1></div>
+          <div class="upform-header"></div>
       
           <div class="upform-main">
       
             
             <div class="input-block">
+              <h1><div class="label">SECRET ADMIRER 🕵</div></h1>
               <div class="label">Enter your details about your secret admirer.<br>
                 HINT them that it might be you who said it but don't make it too obvious.<br>
                 (your identity will be anonymous) </div>
@@ -216,9 +217,7 @@ input[type="radio"].toggle:checked + label:after {
     $(container).find(".input-block").first().click();
   });
 
-  $($this).find("form").submit(function() {
-    return false;
-  });
+
 
   $(container)
     .find(".input-block")
@@ -289,10 +288,7 @@ $.fn.upform = function() {
     $(container).find(".input-block").first().click();
   });
 
-  $($this).find("form").submit(function() {
-    return false;
-  });
-
+  
   $(container)
     .find(".input-block")
     .not(".input-block input")
