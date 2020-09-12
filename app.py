@@ -113,7 +113,7 @@ def intern_of_the_week_insert_data(form_id):
         form = intern_of_the_week_forms.find_one({'form_id':form_id})
         return render_template("form-2.html", form = form, error_msg = error_msg, form_data = form_data)
     if(request.values.get('star') == None):
-        error_msg = "Please Give The Star Rating"
+        error_msg = "(Please Give The Star Rating)"
         form = intern_of_the_week_forms.find_one({'form_id':form_id})
         return render_template("form-2.html", form = form, error_msg = error_msg, form_data = form_data)
     #print(form_data)
