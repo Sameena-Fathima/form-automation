@@ -228,7 +228,18 @@ def index():
     if 'access' in session:
         secret_admirer_forms_list = secret_admirer_forms.find()
         intern_of_the_week_forms_list = intern_of_the_week_forms.find()
+        if 'page_no' in session:
+            session.pop('page_no',None)
+            return render_template("index2.html", secret_admirer_forms_list = secret_admirer_forms_list, intern_of_the_week_forms_list = intern_of_the_week_forms_list)
         return render_template("index.html", secret_admirer_forms_list = secret_admirer_forms_list, intern_of_the_week_forms_list = intern_of_the_week_forms_list)
+    else:
+        return render_template("login.html")
+
+@app.route('/home2')
+def index2():
+    if 'access' in session:
+        session['page_no'] = 2
+        return redirect(url_for('index'))
     else:
         return render_template("login.html")
 
