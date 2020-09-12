@@ -186,7 +186,7 @@ def return_file_2(return_file_type,form_id):
                 star = row['star']
                 questions = row['questions']
                 print(Email,Name,Intern_of_the_week,Reason,star)
-                html += '''<h1>Email</h1>
+                html = '''<h1>Email</h1>
                     <p>'''+Email+'''</p>
                     <h1>Name</h1>
                     <p>'''+Name+'''</p>
@@ -207,7 +207,7 @@ def return_file_2(return_file_type,form_id):
                 star = row['star']
                 questions = row['questions']
                 print("printing",Intern_of_the_week,Reason,star)
-                html += '''<h1>Who would you nominate as Intern of the Week?</h1>
+                html = '''<h1>Who would you nominate as Intern of the Week?</h1>
                     <p>'''+Intern_of_the_week+'''</p>
                     <h1>Why would you nominate them?</h1>
                     <p>'''+Reason+'''</p>
