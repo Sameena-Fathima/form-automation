@@ -14,9 +14,22 @@
   </head>
   <body>
     <div class="jumbotron header">
-        <h3 class="display-4 text-center text-uppercase" >SECRET ADMIRER AND INTERN OF THE WEEK AUTOMATION</h3>
+        <h1 class=" text-center text-uppercase" >SECRET ADMIRER AND INTERN OF THE WEEK AUTOMATION</h1>
     </div>
     <div class="container main">
+      <div class="dashboard d-flex justify-content-between mb-2">
+        <h2><a href="/trusted-commitee">Admin Dashboard</a></h2>
+        <div class="dropdown">
+          <button class="btn btn-outline-success dropdown-toggle green" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            ADMIN
+          </button>
+          <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="/logout">Logout</a>
+          </div>
+        </div>
+      </div>
+      <div class="container main border border-success rounded">
+      <a href="/"><button class="btn btn-sm btn-outline-danger bold">Back</button></a>
         <h3 class="text-center mb-4">{{form['form_name']}}</h3><!-- <div class="form-group">
           <label for="exampleInputPassword1">Date</label>
           <input type="text" class="form-control" id="exampleInputPassword1" name = "date">
@@ -29,14 +42,14 @@
               <input type="text" class="form-control mb-2" id="url" value="http://127.0.0.1:5000/secret-admirer/{{form['form_id']}}">
             </div>
             <div class="col-sm-2"><button class="btn btn-success btn-block mb-2 bold" id="copy-button" onclick="copy()">Copy</button></div>
-          <div>
+          <div class="ml-2">
               <a href="/secret-admirer/admin-return-file/{{form['form_id']}}" target="blank"><button class='btn btn-success' style = "width: 12rem;">Download Admin PDF</button></a>
-              <a href="/secret-admirer/return-file/{{form['form_id']}}" target="blank"><button class='btn btn-success' >Download PDF</button></a>
+              <a href="/secret-admirer/return-file/{{form['form_id']}}" target="blank"><button class='btn btn-success' style = "width: 12rem;">Download PDF</button></a>
             </div>
           </div>
     </div>
-  </div>
-    <div class="container" style="width: 40rem;">
+  
+    <div class="container mb-4" style="width: 40rem;">
       <center><h2>Responses</h2></center>
     <ul class="list-group " >
       {% for response in responses%}
@@ -44,6 +57,8 @@
        {% endfor %}
     </ul>
     </div>
+    </div>
+  </div>
    
     
 <script>

@@ -48,7 +48,7 @@
   <div class="hand"></div>
   <div class="hand rgt"></div>
   
-  <h1>Secret Admirer</h1>
+  <h1>🕵️ {{form['form_name']}} 🕵️‍♀️</h1>
   <h4>Enter your details about your secret admirer.<br>
     HINT them that it might be you who said it but don't make it too obvious.<br>
     (your identity will be anonymous) </h4>
@@ -66,11 +66,11 @@
     <label class="form-label">Who is your secret admirer?</label>
   </div>
   <div class="form-group">
-    <input name="reason" required="required" class="form-control"/>
+    <textarea name="reason" required="required" class="form-control" style="resize: none;"></textarea>
     <label class="form-label">Tell us why</label>
   </div>
   <div class="form-group">
-    <input name="hint" required="required" class="form-control"/>
+    <textarea name="hint" required="required" class="form-control" style="resize: none;"></textarea>
     <label class="form-label">Give them a hint about you</label>
     
     <button class="btn">Submit</button>
