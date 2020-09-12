@@ -29,15 +29,22 @@
                   <input type="text" class="form-control mb-2" id="url" value="http://127.0.0.1:5000/intern-of-the-week/{{form['form_id']}}">
                 </div>
                 <div class="col-sm-2"><button class="btn btn-success btn-block mb-2 bold" id="copy-button" onclick="copy()">Copy</button></div>
+              <div>
+                  <a href="/intern-of-the-week/admin-return-file/{{form['form_id']}}" target="blank"><button class='btn btn-success' style = "width: 12rem;">Download Admin PDF</button></a>
+                  <a href="/intern-of-the-week/return-file/{{form['form_id']}}" target="blank"><button class='btn btn-success' >Download PDF</button></a>
+                </div>
               </div>
         </div>
-        <h3>Responses</h3>
-        {% for response in responses%}
-        <h6>{{response['name']}}</h6>
-        {% endfor %}
-        <h3>Download PDF</h3>
-        <a href="/intern-of-the-week/return-file/{{form['form_id']}}" target="blank"><button class='btn btn-primary'>Download</button></a>
       </div>
+        <div class="container" style="width: 40rem;">
+          <center><h2>Responses</h2></center>
+        <ul class="list-group " >
+          {% for response in responses%}
+           <li class="list-group-item text-center d-inline-block">{{response['name']}}</li>
+           {% endfor %}
+        </ul>
+        </div>       
+      
     
 <script>
     function copy () {
