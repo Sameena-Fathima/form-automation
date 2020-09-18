@@ -6,21 +6,28 @@
   <title>Secret Admirer</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
   <style>
-    @media only screen and (max-width: 600px) {
-  .body {
-    top: 580px;
-  }
-  .foot {
-    top: 740px;
-  }
-  form {
-    height: 680px;
-  }
+    .body {
+      top: 550px;
+    }
+    .foot {
+      top: 710px;
+    }
+    form {
+      height: 650px;
+    }
+
+textarea {
+    border: 0 none white;
+    overflow: hidden;
+    padding: 0;
+    outline: none;
+    background-color: #D0D0D0;
+    resize: none;
 }
   </style>
 
 </head>
-<body>
+<body onload="init();">
 <!-- partial:index.partial.html -->
 <div class="panda">
   <div class="ear"></div>
@@ -36,15 +43,15 @@
     <div class="nose"></div>
     <div class="mouth"></div>
   </div>
-  <div class="body"> </div>
-  <div class="foot">
+  <div class="body" id="body"> </div>
+  <div class="foot" id="foot1">
     <div class="finger"></div>
   </div>
-  <div class="foot rgt">
+  <div class="foot rgt" id="foot2">
     <div class="finger"></div>
   </div>
 </div>
-<form action="/secret-admirer/{{form['form_id']}}/submit" method='POST'>
+<form action="/secret-admirer/{{form['form_id']}}/submit" method='POST' id="form">
   <div class="hand"></div>
   <div class="hand rgt"></div>
   
@@ -66,19 +73,73 @@
     <label class="form-label">Who is your secret admirer?</label>
   </div>
   <div class="form-group">
-    <textarea name="reason" required="required" class="form-control" style="resize: none;"></textarea>
+    <textarea name="reason" required="required" class="form-control" id="text" style="resize:none;"></textarea>
     <label class="form-label">Tell us why</label>
   </div>
   <div class="form-group">
-    <textarea name="hint" required="required" class="form-control" style="resize: none;"></textarea>
+    <textarea name="hint" required="required" class="form-control" id="text2" style="resize:none;"></textarea>
     <label class="form-label">Give them a hint about you</label>
-    
     <button class="btn">Submit</button>
   </div>
 </form>
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script  src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    var observe;
+if (window.attachEvent) {
+    observe = function (element, event, handler) {
+        element.attachEvent('on'+event, handler);
+    };
+}
+else {
+    observe = function (element, event, handler) {
+        element.addEventListener(event, handler, false);
+    };
+}
+function init () {
+    var text = document.getElementById('text');
+    var text2 = document.getElementById('text2');
+    var x = document.getElementById('body');
+    var y1 = document.getElementById('foot1');
+    var y2 = document.getElementById('foot2');
+    var z = document.getElementById('form');
+    function resize () {
+        text.style.height = 'auto';
+        text.style.height = text.scrollHeight+'px';
+        x.style.top = (550+text.scrollHeight+text2.scrollHeight-78) + 'px';
+        y1.style.top = (710+text.scrollHeight+text2.scrollHeight-78) + 'px';
+        y2.style.top = (710+text.scrollHeight+text2.scrollHeight-78) + 'px';
+        z.style.height = (650+text.scrollHeight+text2.scrollHeight-78) + 'px';
+    }
+    function resize2 () {
+        text2.style.height = 'auto';
+        text2.style.height = text2.scrollHeight+'px';
+        x.style.top = (550+text.scrollHeight+text2.scrollHeight-78) + 'px';
+        y1.style.top = (710+text.scrollHeight+text2.scrollHeight-78) + 'px';
+        y2.style.top = (710+text.scrollHeight+text2.scrollHeight-78) + 'px';
+        z.style.height = (650+text.scrollHeight+text2.scrollHeight-78) + 'px';
+    }
+    /* 0-timeout to get the already changed text */
+    function delayedResize () {
+        window.setTimeout(resize, 0);
+    }
+    function delayedResize2 () {
+        window.setTimeout(resize2, 0);
+    }
+    observe(text, 'change',  resize);
+    observe(text, 'cut',     delayedResize);
+    observe(text, 'paste',   delayedResize);
+    observe(text, 'drop',    delayedResize);
+    observe(text, 'keydown', delayedResize);
+    observe(text2, 'change',  resize2);
+    observe(text2, 'cut',     delayedResize2);
+    observe(text2, 'paste',   delayedResize2);
+    observe(text2, 'drop',    delayedResize2);
+    observe(text2, 'keydown', delayedResize2);
 
+    resize();
+}
+  </script>
 </body>
 </html>
