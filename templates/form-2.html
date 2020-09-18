@@ -5,17 +5,25 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Intern of the week</title>
   <link rel="stylesheet" href="{{ url_for('static', filename='css/form.css') }}">
-  <link rel="stylesheet" href="http://netdna.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css">
+  <link href="https://use.fontawesome.com/releases/v5.0.1/css/all.css" rel="stylesheet">
   <style>
     .body {
-      top: 600px;
+      top: 570px;
     }
     .foot {
-      top: 760px;
+      top: 730px;
     }
     form {
-      height: 700px;
+      height: 670px;
     }
+    textarea {
+    border: 0 none white;
+    overflow: hidden;
+    padding: 0;
+    outline: none;
+    background-color: #D0D0D0;
+    resize: none;
+}
   </style>
 <style>
 @import url(http://fonts.googleapis.com/css?family=Roboto:500,100,300,700,400);
@@ -40,11 +48,13 @@ input.star:checked ~ label.star:before {
   content: '\f005';
   color: #FF4081;
   transition: all .25s;
+  font-family: 'Font Awesome\ 5 Free';
+  font-weight: 900;
 }
 
 input.star-10:checked ~ label.star:before {
-  color: #FF4081;
-  text-shadow: 0 0 20px #952;
+  color: #FD4;
+  text-shadow: 0 0 15px #952;
 }
 
 input.star-4:checked ~ label.star:before { color: #f00; }
@@ -55,20 +65,21 @@ input.star-1:checked ~ label.star:before { color: #f00; }
 label.star:hover { transform: rotate(-15deg) scale(1.3); }
 
 label.star:before {
-  content: '\f006';
-  font-family: FontAwesome;
+  content: '\f005';
+  font-family: 'Font Awesome\ 5 Free';
+  font-weight: 200;
 }
 
-@media only screen and (max-width: 600px) {
+@media only screen and (max-width: 767px) {
   label.star {
     padding: 2px;
-    font-size: 18px;
+    font-size: 16px;
     }
 }
 </style>
 <link href="http://www.cssscript.com/wp-includes/css/sticky.css" rel="stylesheet" type="text/css">
 </head>
-<body>
+<body onload="init();">
 <!-- partial:index.partial.html -->
 <div class="panda">
   <div class="ear"></div>
@@ -84,38 +95,38 @@ label.star:before {
     <div class="nose"></div>
     <div class="mouth"></div>
   </div>
-  <div class="body"> </div>
-  <div class="foot">
+  <div class="body" id="body"> </div>
+  <div class="foot" id="foot1">
     <div class="finger"></div>
   </div>
-  <div class="foot rgt">
+  <div class="foot rgt" id="foot2">
     <div class="finger"></div>
   </div>
 </div>
-<form action="/intern-of-the-week/{{form['form_id']}}/submit" method="POST">
+<form action="/intern-of-the-week/{{form['form_id']}}/submit" method="POST" id="form">
   <div class="hand"></div>
   <div class="hand rgt"></div>
   
-  <h1>🏆 {{form['form_name']}} 🏆</h1>
+  <h1>{{form['form_name']}}</h1>
   <h4>Nominate your fellow Intern for the Intern of the Week.<br>
     We will surprise them with a TACT gift card (which is worth 10$CAD).<br>
     Note: Please don't nominate yourself (don't be greedy)</h4>
   <p class="alert">Invalid Credentials..!!</p>
   <div class="form-group">
-    <input name="email" value="{{form_data['email']}}" required="required" class="form-control"/>
+    <input name="email" value="{{form_data['email']}}" required="required" class="form-control" autofocus/>
     <label class="form-label">Email address</label>
     
   </div>
   <div class="form-group">
     <input name="name" value="{{form_data['name']}}" required="required" class="form-control"/>
-    <label class="form-label">Your Name?</label>
+    <label class="form-label">What is your name?</label>
   </div>
   <div class="form-group">
     <input name="intern_of_the_week" value="{{form_data['intern_of_the_week']}}" required="required" class="form-control"/>
     <label class="form-label">Who would you nominate?</label>
   </div>
   <div class="form-group">
-    <textarea name="reason" value="{{form_data['reason']}}" required="required" class="form-control"  style="resize: none;"></textarea>
+    <textarea name="reason" class="form-control" required="required" id="text" style="resize:none;"></textarea>
     <label class="form-label">Why would you nominate them?</label>
   </div>
   <div class="form-group">
@@ -147,14 +158,51 @@ label.star:before {
 </div>
   </div><br>
   <div class="form-group" style="clear:both;margin-top:8%;">
-    <textarea name="questions" value="{{form_data['questions']}}" required="required" class="form-control" style="resize: none;"></textarea>
-    <label class="form-label">Comments and/or questions</label>
     <button class="btn">Submit</button>
   </div>
 </form>
 <!-- partial -->
   <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.3/jquery.min.js'></script>
   <script  src="{{ url_for('static', filename='js/main.js') }}"></script>
+  <script>
+    var observe;
+if (window.attachEvent) {
+    observe = function (element, event, handler) {
+        element.attachEvent('on'+event, handler);
+    };
+}
+else {
+    observe = function (element, event, handler) {
+        element.addEventListener(event, handler, false);
+    };
+}
+function init () {
+    var text = document.getElementById('text');
+    function resize () {
+      var x = document.getElementById('body');
+      var y1 = document.getElementById('foot1');
+      var y2 = document.getElementById('foot2');
+      var z = document.getElementById('form');
+        text.style.height = 'auto';
+        text.style.height = text.scrollHeight+'px';
+        x.style.top = (570+text.scrollHeight-39) + 'px';
+        y1.style.top = (730+text.scrollHeight-39) + 'px';
+        y2.style.top = (730+text.scrollHeight-39) + 'px';
+        z.style.height = (670+text.scrollHeight-39) + 'px';
+    }
+    /* 0-timeout to get the already changed text */
+    function delayedResize () {
+        window.setTimeout(resize, 0);
+    }
+    observe(text, 'change',  resize);
+    observe(text, 'cut',     delayedResize);
+    observe(text, 'paste',   delayedResize);
+    observe(text, 'drop',    delayedResize);
+    observe(text, 'keydown', delayedResize);
+
+    resize();
+}
+  </script>
 
 </body>
 </html>
