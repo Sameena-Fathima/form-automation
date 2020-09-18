@@ -13,7 +13,7 @@ class HTML2PDF(FPDF, HTMLMixin):
 
 app = Flask(__name__)
 app.secret_key = "abcde"
-app.config["MONGO_URI"] = "mongodb+srv://sameena:"+os.environ.get("MONGO_PASSWORD")+"@cluster0.pdqrp.mongodb.net/form_automation?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = "mongodb+srv://sameena:testpass@cluster0.pdqrp.mongodb.net/form_automation?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
 secret_admirer = mongo.db.secret_admirer
@@ -250,7 +250,7 @@ def login():
     if request.method=='GET':
         return render_template("login.html")
     password = request.form['password']
-    if(password == os.environ.get("PASSWORD")):
+    if(password == "hai"):
         session['access'] = 'granted'
         return redirect(url_for('index'))
     else:
@@ -323,7 +323,22 @@ def form_details_2(form_id):
     else:
         return redirect(url_for('index'))
 
-
+@app.route('/intern-of-the-week/bar_chart/<form_id>')
+def bar_chart(form_id):
+    form = intern_of_the_week_forms.find_one({'form_id':form_id})
+    responses = intern_of_the_week.find({'form_id':form['form_id']})
+    nominations = {}
+    nominations_list = []
+    for response in responses:
+        if response['intern_of_the_week'] in nominations:
+            nominations[response['intern_of_the_week']] += 1
+        else:
+            nominations[response['intern_of_the_week']] = 1
+    print("printing =============>",nominations)
+    for name,count in nominations.items():
+        nominations_list.append([name,count])
+    print(nominations_list)
+    return render_template('barchart.html',form = form,nominations = nominations_list)
 # @app.route("/htmltopdf",methods = ['GET','POST'])
 # def html2pdf():
 #     # with open('index.html', 'r') as f:
