@@ -1,5 +1,5 @@
 from fpdf import FPDF, HTMLMixin
-from flask import Flask, jsonify, request, redirect, render_template,session,url_for,send_file, session
+from flask import Flask, jsonify, request, redirect, render_template,session,url_for,send_file, make_response, json
 from flask_pymongo import PyMongo
 import random
 import string
@@ -47,13 +47,14 @@ def intern_of_the_form(form_id):
         'intern_of_the_week' : '',
         'reason': '',
         'star': '',
-        'questions' : '',
         'form_id' : form_id
         }
     return render_template("form-2.html", form = form, form_data = form_data)
 
-@app.route("/secret-admirer/<form_id>/submit",methods = ['POST'])
+@app.route("/secret-admirer/<form_id>/submit",methods = ['GET','POST'])
 def secret_admirer_insert_data(form_id):
+    if(request.method=='GET'):
+        return redirect(url_for('secret_admirer_form', form_id=form_id))
     form_data = {
         'email' : request.form['email'],
         'name' : request.form['name'], 
@@ -62,62 +63,25 @@ def secret_admirer_insert_data(form_id):
         'hint' : request.form['hint'],
         'form_id' : form_id
         }
-    # if(request.form['email'] == ''):
-    #     error_msg = "Please Give Your Email Address"
-    #     form = secret_admirer_forms.find_one({'form_id':form_id})
-    #     return render_template("form.html", form = form, error_msg = error_msg, form_data = form_data)
-    # if(request.form['name'] == ''):
-    #     error_msg = "Please Give Your Name"
-    #     form = secret_admirer_forms.find_one({'form_id':form_id})
-    #     return render_template("form.html", form = form, error_msg = error_msg, form_data = form_data)
-    # if(request.form['secret_admirer'] == ''):
-    #     error_msg = "Please Give Your Secret Admirer Name"
-    #     form = secret_admirer_forms.find_one({'form_id':form_id})
-    #     return render_template("form.html", form = form, error_msg = error_msg, form_data = form_data)
-    # if(request.form['reason'] == ''):
-    #     error_msg = "Please Give The Reason"
-    #     form = secret_admirer_forms.find_one({'form_id':form_id})
-    #     return render_template("form.html", form = form, error_msg = error_msg, form_data = form_data)
-    # if(request.form['hint'] == ''):
-    #     error_msg = "Please Give Any Hint"
-    #     form = secret_admirer_forms.find_one({'form_id':form_id})
-    #     return render_template("form.html", form = form, error_msg = error_msg, form_data = form_data)
-    #print(form_data)
     secret_admirer.insert_one(form_data)
     return render_template("form-submitted.html")
 
-@app.route("/intern-of-the-week/<form_id>/submit",methods = ['POST'])
+@app.route("/intern-of-the-week/<form_id>/submit",methods = ['GET','POST'])
 def intern_of_the_week_insert_data(form_id):
+    if(request.method=='GET'):
+        return redirect(url_for('intern_of_the_form', form_id=form_id))
     form_data = {
         'email' : request.form['email'],
         'name' : request.form['name'], 
         'intern_of_the_week' : request.form['intern_of_the_week'],
         'reason': request.form['reason'],
         'star' : request.values.get('star'),
-        'questions' : request.form['questions'],
         'form_id' : form_id
         }
-    # if(request.form['email'] == ''):
-    #     error_msg = "Please Give Your Email Address"
-    #     form = intern_of_the_week_forms.find_one({'form_id':form_id})
-    #     return render_template("form-2.html", form = form, error_msg = error_msg, form_data = form_data)
-    # if(request.form['name'] == ''):
-    #     error_msg = "Please Give Your Name"
-    #     form = intern_of_the_week_forms.find_one({'form_id':form_id})
-    #     return render_template("form-2.html", form = form, error_msg = error_msg, form_data = form_data)
-    # if(request.form['intern_of_the_week'] == ''):
-    #     error_msg = "Please Give Your Nominee Name"
-    #     form = intern_of_the_week_forms.find_one({'form_id':form_id})
-    #     return render_template("form-2.html", form = form, error_msg = error_msg, form_data = form_data)
-    # if(request.form['reason'] == ''):
-    #     error_msg = "Please Give The Reason"
-    #     form = intern_of_the_week_forms.find_one({'form_id':form_id})
-    #     return render_template("form-2.html", form = form, error_msg = error_msg, form_data = form_data)
     if(request.values.get('star') == None):
         error_msg = "Please Give The Star Rating"
         form = intern_of_the_week_forms.find_one({'form_id':form_id})
         return render_template("form-2.html", form = form, error_msg = error_msg, form_data = form_data)
-    #print(form_data)
     intern_of_the_week.insert_one(form_data)
     return render_template("form-2-submitted.html")
 
@@ -126,7 +90,7 @@ def download_pdf():
     return render_template('download.html',value = "secret_admirer.pdf")
 
 
-@app.route('/secret-admirer/<return_file_type>/<form_id>')
+@app.route('/secret-admirer/pdf/<return_file_type>/<form_id>')
 def return_file(return_file_type,form_id):
     if 'access' in session:
         print(return_file_type)
@@ -172,7 +136,7 @@ def return_file(return_file_type,form_id):
     else:
         return redirect(url_for('index'))
 
-@app.route('/intern-of-the-week/<return_file_type>/<form_id>')
+@app.route('/intern-of-the-week/pdf/<return_file_type>/<form_id>')
 def return_file_2(return_file_type,form_id):
     if 'access' in session:
         pdf = HTML2PDF()
@@ -287,8 +251,7 @@ def create_form():
 def form_details(form_id):
     if 'access' in session:
         form = secret_admirer_forms.find_one({'form_id':form_id})
-        responses = secret_admirer.find({'form_id':form['form_id']})
-        return render_template("form-details.html",form = form, responses = responses)
+        return render_template("form-details.html",form = form)
     else:
         return redirect(url_for('index'))
 
@@ -318,8 +281,35 @@ def create_form_2():
 def form_details_2(form_id):
     if 'access' in session:
         form = intern_of_the_week_forms.find_one({'form_id':form_id})
+        return render_template("form-2-details.html",form = form)
+    else:
+        return redirect(url_for('index'))
+
+@app.route('/secret-admirer-form-details/responses/<form_id>')
+def form_responses(form_id):
+    if 'access' in session:
+        form = secret_admirer_forms.find_one({'form_id':form_id})
+        responses = secret_admirer.find({'form_id':form['form_id']})
+        data = []
+        for response in responses:
+            data.append(response['name'])
+        res = make_response(json.dumps(data))
+        res.content_type = 'application/json'
+        return res
+    else:
+        return redirect(url_for('index'))
+
+@app.route('/intern-of-the-week-form-details/responses/<form_id>')
+def form_responses_2(form_id):
+    if 'access' in session:
+        form = intern_of_the_week_forms.find_one({'form_id':form_id})
         responses = intern_of_the_week.find({'form_id':form['form_id']})
-        return render_template("form-2-details.html",form = form, responses = responses)
+        data = []
+        for response in responses:
+            data.append(response['name'])
+        res = make_response(json.dumps(data))
+        res.content_type = 'application/json'
+        return res
     else:
         return redirect(url_for('index'))
 
@@ -328,17 +318,22 @@ def bar_chart(form_id):
     form = intern_of_the_week_forms.find_one({'form_id':form_id})
     responses = intern_of_the_week.find({'form_id':form['form_id']})
     nominations = {}
+    nominations_stars = {}
     nominations_list = []
+    nominations_stars_list = []
     for response in responses:
         if response['intern_of_the_week'] in nominations:
             nominations[response['intern_of_the_week']] += 1
+            nominations_stars[response['intern_of_the_week']] += int(response['star'])
         else:
             nominations[response['intern_of_the_week']] = 1
-    print("printing =============>",nominations)
+            nominations_stars[response['intern_of_the_week']] = int(response['star'])
     for name,count in nominations.items():
         nominations_list.append([name,count])
-    print(nominations_list)
-    return render_template('barchart.html',form = form,nominations = nominations_list)
+    for name,stars in nominations_stars.items():
+        nominations_stars_list.append([name,stars])
+    return render_template('barchart.html',form = form,nominations = nominations_list, stars = nominations_stars_list)
+
 # @app.route("/htmltopdf",methods = ['GET','POST'])
 # def html2pdf():
 #     # with open('index.html', 'r') as f:
