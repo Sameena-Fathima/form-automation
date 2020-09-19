@@ -102,8 +102,9 @@ def return_file(return_file_type,form_id):
                 Name = row['name']
                 Secret_Admirer = row['secret_admirer']
                 Reason = row['reason']
+                Reason = "<br />".join(Reason.split("\n"))
                 Hint = row['hint']
-                # print("printing",Secret_Admirer,Reason,Hint)
+                Hint = "<br />".join(Hint.split("\n"))
                 html = '''<h1>Email</h1>
                     <p>'''+Email+'''</p>
                     <h1>Name</h1>
@@ -120,8 +121,9 @@ def return_file(return_file_type,form_id):
             for row in rows:
                 Secret_Admirer = row['secret_admirer']
                 Reason = row['reason']
+                Reason = "<br />".join(Reason.split("\n"))
                 Hint = row['hint']
-                print(Secret_Admirer,Reason,Hint)
+                Hint = "<br />".join(Hint.split("\n"))
                 html = '''<h1>Who is your secret admirer in our Intern team?</h1>
                     <p>'''+Secret_Admirer+'''</p>
                     <h1>Tell us why?</h1>
@@ -147,9 +149,8 @@ def return_file_2(return_file_type,form_id):
                 Name = row['name']
                 Intern_of_the_week = row['intern_of_the_week']
                 Reason = row['reason']
+                Reason = "<br />".join(Reason.split("\n"))
                 star = row['star']
-                questions = row['questions']
-                print(Email,Name,Intern_of_the_week,Reason,star)
                 html = '''<h1>Email</h1>
                     <p>'''+Email+'''</p>
                     <h1>Name</h1>
@@ -159,26 +160,21 @@ def return_file_2(return_file_type,form_id):
                     <h1>Why would you nominate them?</h1>
                     <p>'''+Reason+'''</p>
                     <h1>Rate them (1-10)</h1>
-                    <p>'''+star+'''</p>
-                    <h1>Comments/Questions</h1>
-                    </p>'''+questions+'''</p>'''
+                    <p>'''+star+'''</p>'''
                 pdf.add_page()
                 pdf.write_html(html)      
         else:
             for row in rows:
                 Intern_of_the_week = row['intern_of_the_week']
                 Reason = row['reason']
+                Reason = "<br />".join(Reason.split("\n"))
                 star = row['star']
-                questions = row['questions']
-                print("printing",Intern_of_the_week,Reason,star)
                 html = '''<h1>Who would you nominate as Intern of the Week?</h1>
                     <p>'''+Intern_of_the_week+'''</p>
                     <h1>Why would you nominate them?</h1>
                     <p>'''+Reason+'''</p>
                     <h1>Rate them (1-10)</h1>
-                    <p>'''+star+'''</p>
-                    <h1>Comments/Questions</h1>
-                    </p>'''+questions+'''</p>'''
+                    <p>'''+star+'''</p>'''
                 pdf.add_page()
                 pdf.write_html(html)
         pdf.output('img/intern_of_the_week.pdf')
