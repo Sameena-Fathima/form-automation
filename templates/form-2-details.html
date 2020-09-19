@@ -51,7 +51,7 @@
         </div>
       
         <div class="container mb-4" style="width: 40rem;">
-          <center><h2>Responses</h2></center>
+          <center><h2 id="count">Responses</h2></center>
         <ul class="list-group" id="responses">
         </ul>
         </div>
@@ -75,6 +75,7 @@
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js" integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV" crossorigin="anonymous"></script>
     <script>
       var responses = document.getElementById("responses")
+      var count = document.getElementById("count")
       var html = ""
       function requestData() {
         let url = '/intern-of-the-week-form-details/responses/{{form["form_id"]}}'
@@ -86,6 +87,7 @@
           for (name of out) {
             html += "<li class='list-group-item text-center d-inline-block'>"+name+"</li>"
           }
+          count.innerHTML = "Responses ("+out.length+")"
           responses.innerHTML = html
           setTimeout(requestData(), 2000)
         })
