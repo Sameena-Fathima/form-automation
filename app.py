@@ -329,24 +329,27 @@ def form_responses_2(form_id):
 
 @app.route('/intern-of-the-week/bar_chart/<form_id>')
 def bar_chart(form_id):
-    form = intern_of_the_week_forms.find_one({'form_id':form_id})
-    responses = intern_of_the_week.find({'form_id':form['form_id']})
-    nominations = {}
-    nominations_stars = {}
-    nominations_list = []
-    nominations_stars_list = []
-    for response in responses:
-        if response['intern_of_the_week'] in nominations:
-            nominations[response['intern_of_the_week']] += 1
-            nominations_stars[response['intern_of_the_week']] += int(response['star'])
-        else:
-            nominations[response['intern_of_the_week']] = 1
-            nominations_stars[response['intern_of_the_week']] = int(response['star'])
-    for name,count in nominations.items():
-        nominations_list.append([name,count])
-    for name,stars in nominations_stars.items():
-        nominations_stars_list.append([name,stars])
-    return render_template('barchart.html',form = form,nominations = nominations_list, stars = nominations_stars_list)
+    if 'access' in session:
+        form = intern_of_the_week_forms.find_one({'form_id':form_id})
+        responses = intern_of_the_week.find({'form_id':form['form_id']})
+        nominations = {}
+        nominations_stars = {}
+        nominations_list = []
+        nominations_stars_list = []
+        for response in responses:
+            if response['intern_of_the_week'] in nominations:
+                nominations[response['intern_of_the_week']] += 1
+                nominations_stars[response['intern_of_the_week']] += int(response['star'])
+            else:
+                nominations[response['intern_of_the_week']] = 1
+                nominations_stars[response['intern_of_the_week']] = int(response['star'])
+        for name,count in nominations.items():
+            nominations_list.append([name,count])
+        for name,stars in nominations_stars.items():
+            nominations_stars_list.append([name,stars])
+        return render_template('barchart.html',form = form,nominations = nominations_list, stars = nominations_stars_list)
+    else:
+        return redirect(url_for('index'))
 
 # @app.route("/htmltopdf",methods = ['GET','POST'])
 # def html2pdf():
