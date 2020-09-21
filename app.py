@@ -13,7 +13,7 @@ class HTML2PDF(FPDF, HTMLMixin):
 
 app = Flask(__name__)
 app.secret_key = "abcde"
-app.config["MONGO_URI"] = "mongodb+srv://sameena:testpass@cluster0.pdqrp.mongodb.net/form_automation?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = "mongodb+srv://sameena:"+os.environ.get('MONGO_PASSWORD')+"@cluster0.pdqrp.mongodb.net/form_automation?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
 secret_admirer = mongo.db.secret_admirer
@@ -228,7 +228,7 @@ def login():
     if request.method=='GET':
         return render_template("login.html")
     password = request.form['password']
-    if(password == 'a'):
+    if(password == os.environ.get('PASSWORD')):
         session['access'] = 'granted'
         return redirect(url_for('index'))
     else:
