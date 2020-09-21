@@ -13,7 +13,7 @@ class HTML2PDF(FPDF, HTMLMixin):
 
 app = Flask(__name__)
 app.secret_key = "abcde"
-app.config["MONGO_URI"] = "mongodb+srv://sameena:"+os.environ.get('MONGO_PASSWORD')+"@cluster0.pdqrp.mongodb.net/form_automation?retryWrites=true&w=majority"
+app.config["MONGO_URI"] = "mongodb+srv://sameena:testpass@cluster0.pdqrp.mongodb.net/form_automation?retryWrites=true&w=majority"
 mongo = PyMongo(app)
 
 secret_admirer = mongo.db.secret_admirer
@@ -89,6 +89,10 @@ def intern_of_the_week_insert_data(form_id):
 def download_pdf():
     return render_template('download.html',value = "secret_admirer.pdf")
 
+@app.route("/test",methods = ['GET'])
+def test_pdf():
+    pdfkit.from_string('Hello!', 'img/out.pdf')
+    return send_file('img/out.pdf', attachment_filename='out.pdf', as_attachment=True, cache_timeout=0)
 
 @app.route('/secret-admirer/pdf/<return_file_type>/<form_id>')
 def return_file(return_file_type,form_id):
@@ -99,12 +103,17 @@ def return_file(return_file_type,form_id):
         if(return_file_type == "admin-return-file"):
             for row in rows:
                 Email = row['email']
+                Email = Email.encode('latin-1', 'replace').decode('latin-1')
                 Name = row['name']
+                Name = Name.encode('latin-1', 'replace').decode('latin-1')
                 Secret_Admirer = row['secret_admirer']
+                Secret_Admirer = Secret_Admirer.encode('latin-1', 'replace').decode('latin-1')
                 Reason = row['reason']
                 Reason = "<br />".join(Reason.split("\n"))
+                Reason = Reason.encode('latin-1', 'replace').decode('latin-1')
                 Hint = row['hint']
                 Hint = "<br />".join(Hint.split("\n"))
+                Hint = Hint.encode('latin-1', 'replace').decode('latin-1')
                 html = '''<h1>Email</h1>
                     <p>'''+Email+'''</p>
                     <h1>Name</h1>
@@ -120,10 +129,13 @@ def return_file(return_file_type,form_id):
         else:
             for row in rows:
                 Secret_Admirer = row['secret_admirer']
+                Secret_Admirer = Secret_Admirer.encode('latin-1', 'replace').decode('latin-1')
                 Reason = row['reason']
                 Reason = "<br />".join(Reason.split("\n"))
+                Reason = Reason.encode('latin-1', 'replace').decode('latin-1')
                 Hint = row['hint']
                 Hint = "<br />".join(Hint.split("\n"))
+                Hint = Hint.encode('latin-1', 'replace').decode('latin-1')
                 html = '''<h1>Who is your secret admirer in our Intern team?</h1>
                     <p>'''+Secret_Admirer+'''</p>
                     <h1>Tell us why?</h1>
@@ -146,10 +158,14 @@ def return_file_2(return_file_type,form_id):
         if(return_file_type == "admin-return-file"):
             for row in rows:
                 Email = row['email']
+                Email = Email.encode('latin-1', 'replace').decode('latin-1')
                 Name = row['name']
+                Name = Name.encode('latin-1', 'replace').decode('latin-1')
                 Intern_of_the_week = row['intern_of_the_week']
+                Intern_of_the_week = Intern_of_the_week.encode('latin-1', 'replace').decode('latin-1')
                 Reason = row['reason']
                 Reason = "<br />".join(Reason.split("\n"))
+                Reason = Reason.encode('latin-1', 'replace').decode('latin-1')
                 star = row['star']
                 html = '''<h1>Email</h1>
                     <p>'''+Email+'''</p>
@@ -166,8 +182,10 @@ def return_file_2(return_file_type,form_id):
         else:
             for row in rows:
                 Intern_of_the_week = row['intern_of_the_week']
+                Intern_of_the_week = Intern_of_the_week.encode('latin-1', 'replace').decode('latin-1')
                 Reason = row['reason']
                 Reason = "<br />".join(Reason.split("\n"))
+                Reason = Reason.encode('latin-1', 'replace').decode('latin-1')
                 star = row['star']
                 html = '''<h1>Who would you nominate as Intern of the Week?</h1>
                     <p>'''+Intern_of_the_week+'''</p>
@@ -210,7 +228,7 @@ def login():
     if request.method=='GET':
         return render_template("login.html")
     password = request.form['password']
-    if(password == os.environ.get('PASSWORD')):
+    if(password == 'a'):
         session['access'] = 'granted'
         return redirect(url_for('index'))
     else:
